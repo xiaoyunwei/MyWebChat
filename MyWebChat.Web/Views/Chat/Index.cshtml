@@ -47,6 +47,9 @@
 
             $('#messageArea').focus();
 
+            // 控制发送按钮状态
+            if ($('#usersDropDrowList option:selected').val() != '')
+                $('#sendMessage').removeAttr("disabled");
             $('#usersDropDrowList').change(function () {
                 if ($(this).children('option:selected').val() == '')
                     $('#sendMessage').attr("disabled", "disabled");
