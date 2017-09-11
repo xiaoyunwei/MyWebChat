@@ -1,0 +1,42 @@
+﻿@model IEnumerable<MyWebChat.Web.Models.User>
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>用户列表</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DisplayName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsOnline)
+        </th>
+        <th>
+            操作
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisplayName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsOnline)
+        </td>
+        <td>
+            @Html.ActionLink("聊天", "Index", "Chat", new { id = item.UserName }, "")
+        </td>
+    </tr>
+}
+
+</table>

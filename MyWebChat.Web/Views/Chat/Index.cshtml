@@ -1,0 +1,94 @@
+﻿
+<h2>欢迎使用</h2>
+
+<h4>
+    <span>
+        选择聊天对象：
+        @Html.DropDownList("usersDropDrowList", (List<SelectListItem>)ViewData["OnlineUsers"])
+    </span>    
+</h4>
+
+<div>
+    <div>
+        <ul id="discussionArea" style="width:600px;height:400px;border:1px solid" />
+    </div>
+    <div>
+        <textarea id="messageArea" rows="4" style="max-width:100%;width:600px"></textarea>
+
+        <div style="margin:4px">
+            <input id="sendMessage" type="button" value="发送" disabled="disabled" />
+            <input id="broadcastMessage" type="button" value="广播" hidden="hidden" />
+        </div>        
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <!--引用自动生成的 SignalR hub 脚本 -->
+    <script src="~/signalr/hubs"></script>
+    
+    <script>
+        $(function () {
+            var chat = $.connection.chatHub;
+
+            if ('@ViewBag.CanBroadcast' == 'True')
+                $('#broadcastMessage').removeAttr("hidden");
+            else
+                $('#broadcastMessage').attr("hidden", "hidden");
+
+            // 接收广播消息
+            chat.client.receiveBroadcast = function (name, message) {
+                appendDiscussionContent('【广播】' + name, message);
+            };
+
+            chat.client.receiveMessage = function (name, message) {
+                appendDiscussionContent(name, message);
+            };
+
+            $('#messageArea').focus();
+
+            $('#usersDropDrowList').change(function () {
+                if ($(this).children('option:selected').val() == '')
+                    $('#sendMessage').attr("disabled", "disabled");
+                else
+                    $('#sendMessage').removeAttr("disabled");
+            })
+
+            // Start the connection.
+            $.connection.hub.start().done(function () {
+                $('#sendMessage').click(function () {
+                    var message = $('#messageArea').val();
+
+                    // 发送消息给指定接收人
+                    chat.server.send('@ViewBag.Sender', $('#usersDropDrowList option:selected').val(), message);
+
+                    appendDiscussionContent('@ViewBag.Sender', message);
+
+                    // 清空消息准备下次输入
+                    $('#messageArea').val('').focus();
+                });
+
+                $('#broadcastMessage').click(function () {
+                    var message = $('#messageArea').val();
+
+                    // 发送消息给指定接收人
+                    chat.server.broadcast('@ViewBag.Sender', message);
+
+                    // 清空消息准备下次输入
+                    $('#messageArea').val('').focus();
+                });
+            });
+        });
+
+        // 对消息进行html编码
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+
+        function appendDiscussionContent(sender, message) {
+            $('#discussionArea').append('<li><strong>' + htmlEncode(sender)
+                + '</strong>: ' + htmlEncode(message) + '</li>');
+        }
+    </script>
+}

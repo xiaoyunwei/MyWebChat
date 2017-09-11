@@ -9,18 +9,38 @@ namespace MyWebChat.Web.Hubs
 {
     public class ChatHub : Hub
     {
+        private readonly static List<string> onlineUsers = new List<string>();
+
+        public static IEnumerable<string> OnlineUserNames
+        {
+            get
+            {
+                return onlineUsers;
+            }
+        }
+
         public override Task OnConnected()
         {
+            string name = Context.User.Identity.Name;
+            onlineUsers.Add(name);
+
             return base.OnConnected();
         }
 
         public override Task OnDisconnected(bool stopCalled)
         {
+            string name = Context.User.Identity.Name;
+            onlineUsers.Remove(name);
+
             return base.OnDisconnected(stopCalled);
         }
 
         public override Task OnReconnected()
         {
+            string name = Context.User.Identity.Name;
+            if (!onlineUsers.Contains(name))
+                onlineUsers.Add(name);
+
             return base.OnReconnected();
         }
 

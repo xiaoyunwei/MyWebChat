@@ -36,9 +36,15 @@ namespace MyWebChat.Web.Services
             throw new NotImplementedException();
         }
 
-        public IEnumerable<User> GetUsers(string searchText)
+        public IEnumerable<User> GetUsers(string searchText = "")
         {
-            return users.FindAll(p => p.UserName.Contains(searchText) || p.DisplayName.Contains(searchText));
+            IEnumerable<User> result = null;
+            if (string.IsNullOrEmpty(searchText))
+                result = users.ToArray();
+            else
+                users.FindAll(p => p.UserName.Contains(searchText) || p.DisplayName.Contains(searchText));
+
+            return result;
         }
 
         public bool ValidateUser(string userName, string password)

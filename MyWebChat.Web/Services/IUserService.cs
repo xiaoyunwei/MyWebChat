@@ -13,6 +13,6 @@ namespace MyWebChat.Web.Services
 
         User GetUserByName(string userName);
 
-        IEnumerable<User> GetUsers(string searchText);
+        IEnumerable<User> GetUsers(string searchText = "");
     }
 }
