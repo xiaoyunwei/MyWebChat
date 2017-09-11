@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWebChat.Web", "MyWebChat.Web\MyWebChat.Web.csproj", "{C44653FD-40AD-46C2-B1D5-DBF4B70F91A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsDemo", "WinFormsDemo\WinFormsDemo.csproj", "{F2459F29-077C-4CEA-B72D-4BFB7252C265}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C44653FD-40AD-46C2-B1D5-DBF4B70F91A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C44653FD-40AD-46C2-B1D5-DBF4B70F91A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C44653FD-40AD-46C2-B1D5-DBF4B70F91A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2459F29-077C-4CEA-B72D-4BFB7252C265}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2459F29-077C-4CEA-B72D-4BFB7252C265}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2459F29-077C-4CEA-B72D-4BFB7252C265}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2459F29-077C-4CEA-B72D-4BFB7252C265}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
