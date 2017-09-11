@@ -21,6 +21,7 @@ namespace MyWebChat.Web
             });
 
             app.MapSignalR();
+            GlobalHost.HubPipeline.RequireAuthentication();
         }
     }
 }

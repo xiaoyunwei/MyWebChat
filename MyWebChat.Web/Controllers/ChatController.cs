@@ -24,8 +24,7 @@ namespace MyWebChat.Web.Controllers
             onlineUserList.Add(new SelectListItem() { Text = "请选择在线用户", Value = "" });
 
             var allUsers = userService.GetUsers();
-            var onlineUsers = allUsers.Where(p => ChatHub.OnlineUserNames.Contains(p.UserName));
-            foreach(var ou in onlineUsers)
+            foreach (var ou in allUsers)
             {
                 if (ou.UserName == sender.UserName)
                     continue;
