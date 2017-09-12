@@ -48,9 +48,14 @@ namespace MyWebChat.Web.Controllers
 
             if (loginSuccess)
             {
+                var usr = userService.GetUserByName(model.UserName);
+
                 AuthenticationManager.SignIn(
                     new ClaimsIdentity(
-                        new[] { new Claim(ClaimsIdentity.DefaultNameClaimType, model.UserName) },
+                        new[] {
+                            new Claim(ClaimsIdentity.DefaultNameClaimType, model.UserName),
+                            new Claim("DisplayName", usr.DisplayName)
+                        },
                         DefaultAuthenticationTypes.ApplicationCookie)
                     );
 

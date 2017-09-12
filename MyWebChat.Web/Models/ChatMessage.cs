@@ -7,6 +7,8 @@ namespace MyWebChat.Web.Models
 {
     public class ChatMessage
     {
+        public string SenderId { get; set; }
+
         public string SenderName { get; set; }
 
         public string ReceiverId { get; set; }

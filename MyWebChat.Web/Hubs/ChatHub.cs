@@ -5,6 +5,7 @@ using System.Web;
 using Microsoft.AspNet.SignalR;
 using System.Threading.Tasks;
 using MyWebChat.Web.Models;
+using MyWebChat.Web.Services;
 
 namespace MyWebChat.Web.Hubs
 {
@@ -13,6 +14,7 @@ namespace MyWebChat.Web.Hubs
         // 此处仅为演示，实际请将以下数据存放在数据库中
         private readonly static List<string> onlineUsers = new List<string>();
         private readonly static List<ChatMessage> messages = new List<ChatMessage>();
+        IUserService userService = new FakeUserService();
 
         public static IEnumerable<string> OnlineUserNames
         {
@@ -65,9 +67,13 @@ namespace MyWebChat.Web.Hubs
         /// </summary>
         /// <param name="sender">发送人</param>
         /// <param name="message">消息</param>
-        public void Broadcast(string sender, string message)
+        public void Broadcast(string senderId, string message)
         {
-            Clients.All.receiveBroadcast(sender, message);
+            User sender = userService.GetUserByName(senderId);
+            if (sender == null || sender.UserRole != UserRole.管理员)
+                return;
+
+            Clients.All.receiveBroadcast(sender.DisplayName, message);
         }
 
         /// <summary>
@@ -76,13 +82,18 @@ namespace MyWebChat.Web.Hubs
         /// <param name="sender">发送人</param>
         /// <param name="userId">接收者UserName</param>
         /// <param name="message">消息</param>
-        public void Send(string sender, string userId, string message)
+        public void Send(string senderId, string userId, string message)
         {
+            User sender = userService.GetUserByName(senderId);
+            if (sender == null)
+                return;
+
             bool offline = ChatHub.onlineUsers.Contains(userId) ? false : true;
 
             ChatMessage cm = new ChatMessage()
             {
-                SenderName = sender,
+                SenderId = senderId,
+                SenderName = sender.DisplayName,
                 ReceiverId = userId,
                 Message = message,
                 IsOffline = offline,
@@ -96,7 +107,7 @@ namespace MyWebChat.Web.Hubs
 
             if (!offline)
             {
-                Clients.User(userId).receiveMessage(sender, message);
+                Clients.User(userId).receiveMessage(sender.DisplayName, message);
                 cm.ReceiveTime = DateTime.Now;
             }
         }

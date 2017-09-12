@@ -37,6 +37,7 @@
             this.tmrCheckMessage = new System.Windows.Forms.Timer(this.components);
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.btnLogin = new System.Windows.Forms.Button();
+            this.btnShowMessage = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -77,12 +78,14 @@
             // tmrCheckMessage
             // 
             this.tmrCheckMessage.Interval = 3000;
+            this.tmrCheckMessage.Tick += new System.EventHandler(this.tmrCheckMessage_Tick);
             // 
             // notifyIcon
             // 
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
             this.notifyIcon.Text = "notifyIcon1";
             this.notifyIcon.Visible = true;
+            this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseClick);
             // 
             // btnLogin
             // 
@@ -94,11 +97,22 @@
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
+            // btnShowMessage
+            // 
+            this.btnShowMessage.Location = new System.Drawing.Point(88, 156);
+            this.btnShowMessage.Name = "btnShowMessage";
+            this.btnShowMessage.Size = new System.Drawing.Size(75, 23);
+            this.btnShowMessage.TabIndex = 5;
+            this.btnShowMessage.Text = "查看消息";
+            this.btnShowMessage.UseVisualStyleBackColor = true;
+            this.btnShowMessage.Click += new System.EventHandler(this.btnShowMessage_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.btnShowMessage);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtName);
@@ -120,6 +134,7 @@
         private System.Windows.Forms.Timer tmrCheckMessage;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.Button btnShowMessage;
     }
 }
 

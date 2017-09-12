@@ -63,7 +63,7 @@
                     var message = $('#messageArea').val();
 
                     // 发送消息给指定接收人
-                    chat.server.send('@ViewBag.Sender', $('#usersDropDrowList option:selected').val(), message);
+                    chat.server.send('@User.Identity.Name', $('#usersDropDrowList option:selected').val(), message);
 
                     appendDiscussionContent('@ViewBag.Sender', message);
 
@@ -75,7 +75,7 @@
                     var message = $('#messageArea').val();
 
                     // 发送消息给指定接收人
-                    chat.server.broadcast('@ViewBag.Sender', message);
+                    chat.server.broadcast('@User.Identity.Name', message);
 
                     // 清空消息准备下次输入
                     $('#messageArea').val('').focus();
