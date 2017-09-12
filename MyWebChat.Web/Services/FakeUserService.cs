@@ -7,7 +7,7 @@ using Microsoft.AspNet.SignalR;
 
 namespace MyWebChat.Web.Services
 {
-    public class FakeUserService : IUserService, IUserIdProvider
+    public class FakeUserService : IUserService
     {
         List<User> users = new List<User>();
 
@@ -28,12 +28,6 @@ namespace MyWebChat.Web.Services
         public User GetUserByName(string userName)
         {
             return users.FirstOrDefault(p => p.UserName == userName);
-        }
-
-        public string GetUserId(IRequest request)
-        {
-            //HttpContext.Current.Session
-            throw new NotImplementedException();
         }
 
         public IEnumerable<User> GetUsers(string searchText = "")
