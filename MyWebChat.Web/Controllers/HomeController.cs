@@ -32,8 +32,22 @@ namespace MyWebChat.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Login(string returnUrl = null)
+        public ActionResult Login(string usr = "", string pwd = "", string returnUrl = null)
         {
+            if (!string.IsNullOrEmpty(usr) && !string.IsNullOrEmpty(pwd))
+            {
+                string password = this.DecryptText(HttpUtility.UrlDecode(pwd));
+                bool loginSuccess = this.LoginUser(usr, password);
+
+                if(loginSuccess)
+                {
+                    if (!string.IsNullOrEmpty(returnUrl))
+                        return Redirect(returnUrl);
+                    else
+                        return Redirect("/");
+                }                
+            }
+
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
@@ -43,23 +57,10 @@ namespace MyWebChat.Web.Controllers
         {
             ViewData["ReturnUrl"] = returnUrl;
 
-            IUserService userService = new FakeUserService();
-            bool loginSuccess = userService.ValidateUser(model.UserName, model.Password);
-
+            bool loginSuccess = this.LoginUser(model.UserName, model.Password);
             if (loginSuccess)
             {
-                var usr = userService.GetUserByName(model.UserName);
-
-                AuthenticationManager.SignIn(
-                    new ClaimsIdentity(
-                        new[] {
-                            new Claim(ClaimsIdentity.DefaultNameClaimType, model.UserName),
-                            new Claim("DisplayName", usr.DisplayName)
-                        },
-                        DefaultAuthenticationTypes.ApplicationCookie)
-                    );
-
-                if (returnUrl != null)
+                if (!string.IsNullOrEmpty(returnUrl))
                     return Redirect(returnUrl);
                 else
                     return Redirect("/");
@@ -81,6 +82,39 @@ namespace MyWebChat.Web.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        private bool LoginUser(string userName, string password)
+        {
+            IUserService userService = new FakeUserService();
+            bool loginSuccess = userService.ValidateUser(userName, password);
+
+            if (loginSuccess)
+            {
+                var usr = userService.GetUserByName(userName);
+
+                AuthenticationManager.SignIn(
+                    new ClaimsIdentity(
+                        new[] {
+                            new Claim(ClaimsIdentity.DefaultNameClaimType, userName),
+                            new Claim("DisplayName", usr.DisplayName)
+                        },
+                        DefaultAuthenticationTypes.ApplicationCookie)
+                    );
+            }
+
+            return loginSuccess;
+        }
+
+        /// <summary>
+        /// 解密字符串，请使用实际解密方法替换
+        /// </summary>
+        /// <param name="encryptedText"></param>
+        /// <returns></returns>
+        private string DecryptText(string encryptedText)
+        {
+            string decryptedText = encryptedText;
+            return decryptedText;
         }
     }
 }

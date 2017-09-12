@@ -11,6 +11,7 @@ using System.Configuration;
 using RestSharp.Portable;
 using RestSharp.Portable.HttpClient;
 using System.Diagnostics;
+using System.Web;
 
 namespace WinFormsDemo
 {
@@ -43,7 +44,7 @@ namespace WinFormsDemo
             try
             {
                 var messages = await this.GetUnreadMessage();
-                MessageBox.Show("登陆成功！");
+                MessageBox.Show("登陆成功！", "登录", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 tmrCheckMessage.Start();
             }
@@ -66,7 +67,7 @@ namespace WinFormsDemo
                 {
                     notifyIcon.BalloonTipTitle = "您有新的消息";
                     notifyIcon.BalloonTipText = $"{lastMessage.SenderName}: {lastMessage.Message}";
-                    notifyIcon.ShowBalloonTip(3000);
+                    notifyIcon.ShowBalloonTip(5000);
                 }
 
                 lastPrompMessage = lastMessage;
@@ -82,11 +83,13 @@ namespace WinFormsDemo
 
         private void GoChating(string userId = "")
         {
-            string path = "chat";
-            if(!string.IsNullOrEmpty(userId))
+            string pwd = HttpUtility.UrlEncode(this.EncryptText(txtPassword.Text.Trim()));
+
+            string path = $"{baseUrl}home/login?usr={txtName.Text.Trim()}&pwd={pwd}&returnUrl=/chat";
+            if (!string.IsNullOrEmpty(userId))
                 path += $"?id={userId}";
 
-            Process.Start($"{baseUrl}{path}");
+            Process.Start(path);
         }
 
         private void btnShowMessage_Click(object sender, EventArgs e)
@@ -95,6 +98,17 @@ namespace WinFormsDemo
         }
 
         private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            this.GoChating(lastPrompMessage.SenderId);
+        }
+
+        private string EncryptText(string text)
+        {
+            string encrypted = text;
+            return encrypted;
+        }
+
+        private void notifyIcon_BalloonTipClicked(object sender, EventArgs e)
         {
             this.GoChating(lastPrompMessage.SenderId);
         }

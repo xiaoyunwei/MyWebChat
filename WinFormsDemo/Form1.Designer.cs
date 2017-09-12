@@ -43,35 +43,39 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 36);
+            this.label1.Location = new System.Drawing.Point(39, 45);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.Size = new System.Drawing.Size(67, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "用户名：";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(41, 61);
+            this.label2.Location = new System.Drawing.Point(55, 76);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
+            this.label2.Size = new System.Drawing.Size(52, 15);
             this.label2.TabIndex = 1;
             this.label2.Text = "密码：";
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(88, 33);
+            this.txtName.Location = new System.Drawing.Point(117, 41);
+            this.txtName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(125, 21);
+            this.txtName.Size = new System.Drawing.Size(165, 25);
             this.txtName.TabIndex = 2;
             this.txtName.Text = "tom";
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(88, 61);
+            this.txtPassword.Location = new System.Drawing.Point(117, 76);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(125, 21);
+            this.txtPassword.Size = new System.Drawing.Size(165, 25);
             this.txtPassword.TabIndex = 3;
             this.txtPassword.Text = "abcd1234";
             // 
@@ -85,13 +89,15 @@
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
             this.notifyIcon.Text = "notifyIcon1";
             this.notifyIcon.Visible = true;
+            this.notifyIcon.BalloonTipClicked += new System.EventHandler(this.notifyIcon_BalloonTipClicked);
             this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseClick);
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(88, 109);
+            this.btnLogin.Location = new System.Drawing.Point(117, 136);
+            this.btnLogin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(75, 23);
+            this.btnLogin.Size = new System.Drawing.Size(100, 29);
             this.btnLogin.TabIndex = 4;
             this.btnLogin.Text = "登陆";
             this.btnLogin.UseVisualStyleBackColor = true;
@@ -99,9 +105,10 @@
             // 
             // btnShowMessage
             // 
-            this.btnShowMessage.Location = new System.Drawing.Point(88, 156);
+            this.btnShowMessage.Location = new System.Drawing.Point(117, 195);
+            this.btnShowMessage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnShowMessage.Name = "btnShowMessage";
-            this.btnShowMessage.Size = new System.Drawing.Size(75, 23);
+            this.btnShowMessage.Size = new System.Drawing.Size(100, 29);
             this.btnShowMessage.TabIndex = 5;
             this.btnShowMessage.Text = "查看消息";
             this.btnShowMessage.UseVisualStyleBackColor = true;
@@ -109,16 +116,19 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AcceptButton = this.btnLogin;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(379, 326);
             this.Controls.Add(this.btnShowMessage);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
